@@ -18,14 +18,14 @@ The program is plain Java (no external dependencies). You need JDK 21.
 
 ```bash
 mvn compile
-mvn exec:java -Dexec.mainClass=LendingTracker
+java -cp target/classes app.LendingApplication
 ```
 
 **Or directly with the JDK:**
 
 ```bash
-javac -d target/classes src/main/java/LendingTracker.java
-java -cp target/classes LendingTracker
+javac -d target/classes src/main/java/app/LendingApplication.java src/main/java/domain/*.java
+java -cp target/classes app.LendingApplication
 ```
 
 Run it first, before you change anything, so you can see how it currently
