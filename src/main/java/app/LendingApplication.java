@@ -52,7 +52,7 @@ public class LendingApplication {
     }
 
     private static void printBorrowMessage(LendingItem item, Loan loan) {
-        if (item.getType().equals("BOOK") || item.getType().equals("AUDIO_KIT")) {
+        if (loan.getLoanDays() > 0) {
             System.out.println("Lent \"" + item.getTitle() + "\" to " + loan.getMemberName() + " for "
                     + loan.getLoanDays() + " days");
         }

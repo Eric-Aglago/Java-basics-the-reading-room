@@ -3,6 +3,7 @@ package application;
 import domain.Library;
 import domain.LendingItem;
 import domain.Loan;
+import domain.LoanPolicy;
 import domain.Member;
 
 public class LendingService {
@@ -17,20 +18,9 @@ public class LendingService {
             throw new IllegalStateException("Item \"" + item.getTitle() + "\" is already on loan");
         }
 
-        int loanDays = 0;
-        if (item.getType().equals("BOOK")) {
-            loanDays = 14;
-            if (member.getKind().equals("STUDENT")) {
-                loanDays = 28;
-            }
-            item.lendTo(member.getName());
-        } else if (item.getType().equals("AUDIO_KIT")) {
-            loanDays = 7;
-            if (member.getKind().equals("STUDENT")) {
-                loanDays = 14;
-            }
-            item.lendTo(member.getName());
-        }
+        LoanPolicy policy = item.getLoanPolicy();
+        int loanDays = policy.loanDaysFor(member);
+        policy.applyTo(item, member);
 
         member.recordBorrowedItem(item.getTitle());
         Loan loan = new Loan(member.getName(), item.getTitle(), loanDays);
