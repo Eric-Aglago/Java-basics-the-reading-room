@@ -29,7 +29,11 @@ public class LendingApplication {
         System.out.println("Returned \"" + audioCourse.getTitle() + "\"");
 
         // ... and the sort of thing that worries them:
-        printBorrowMessage(novel, lendingService.borrow(ama, novel)); // the novel is already out with Kofi, but nothing stops this
+        try {
+            printBorrowMessage(novel, lendingService.borrow(ama, novel));
+        } catch (IllegalStateException exception) {
+            System.out.println("Could not lend \"" + novel.getTitle() + "\": " + exception.getMessage());
+        }
 
         System.out.println();
         System.out.println("=== " + lib.getName() + " - end of day ===");

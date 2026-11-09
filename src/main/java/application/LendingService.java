@@ -13,6 +13,10 @@ public class LendingService {
     }
 
     public Loan borrow(Member member, LendingItem item) {
+        if (item.getStatus().equals("ON_LOAN")) {
+            throw new IllegalStateException("Item \"" + item.getTitle() + "\" is already on loan");
+        }
+
         int loanDays = 0;
         if (item.getType().equals("BOOK")) {
             loanDays = 14;
