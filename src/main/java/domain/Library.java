@@ -22,7 +22,7 @@ public class Library {
     }
 
     // Lend an item to a member. The loan period depends on the kind of item and member.
-    public void borrow(Member m, LendingItem item) {
+    public Loan borrow(Member m, LendingItem item) {
         int loanDays = 0;
         if (item.type.equals("BOOK")) {
             loanDays = 14;
@@ -31,7 +31,6 @@ public class Library {
             }
             item.status = "ON_LOAN";
             item.currentBorrower = m.name;
-            System.out.println("Lent \"" + item.title + "\" to " + m.name + " for " + loanDays + " days");
         } else if (item.type.equals("AUDIO_KIT")) {
             loanDays = 7;
             if (m.kind.equals("STUDENT")) {
@@ -39,10 +38,11 @@ public class Library {
             }
             item.status = "ON_LOAN";
             item.currentBorrower = m.name;
-            System.out.println("Lent \"" + item.title + "\" to " + m.name + " for " + loanDays + " days");
         }
         m.history.add("Borrowed " + item.title);
-        loans.add(new Loan(m.name, item.title, loanDays));
+        Loan loan = new Loan(m.name, item.title, loanDays);
+        loans.add(loan);
+        return loan;
     }
 
     public void returnItem(LendingItem item) {
@@ -53,26 +53,9 @@ public class Library {
                 l.status = "RETURNED";
             }
         }
-        System.out.println("Returned \"" + item.title + "\"");
     }
 
     public List<Loan> getLoans() {
         return loans;
-    }
-
-    public void printReport() {
-        System.out.println();
-        System.out.println("=== " + name + " - end of day ===");
-        System.out.println("Items:");
-        for (LendingItem i : items) {
-            System.out.println("  \"" + i.title + "\" (" + i.type + "): " + i.status
-                    + (i.currentBorrower != null ? " - with " + i.currentBorrower : ""));
-        }
-        System.out.println("Active loans:");
-        for (Loan l : loans) {
-            if (l.status.equals("ACTIVE")) {
-                System.out.println("  Loan #" + l.id + ": \"" + l.itemTitle + "\" -> " + l.memberName);
-            }
-        }
     }
 }

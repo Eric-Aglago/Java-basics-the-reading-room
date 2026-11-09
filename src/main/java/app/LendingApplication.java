@@ -2,6 +2,7 @@ package app;
 
 import domain.Library;
 import domain.LendingItem;
+import domain.Loan;
 import domain.Member;
 
 public class LendingApplication {
@@ -20,13 +21,34 @@ public class LendingApplication {
         lib.addMember(ama);
 
         // a normal afternoon
-        lib.borrow(kofi, novel);
-        lib.borrow(ama, audioCourse);
+        printBorrowMessage(novel, lib.borrow(kofi, novel));
+        printBorrowMessage(audioCourse, lib.borrow(ama, audioCourse));
         lib.returnItem(audioCourse);
+        System.out.println("Returned \"" + audioCourse.title + "\"");
 
         // ... and the sort of thing that worries them:
-        lib.borrow(ama, novel); // the novel is already out with Kofi, but nothing stops this
+        printBorrowMessage(novel, lib.borrow(ama, novel)); // the novel is already out with Kofi, but nothing stops this
 
-        lib.printReport();
+        System.out.println();
+        System.out.println("=== " + lib.name + " - end of day ===");
+        System.out.println("Items:");
+        for (LendingItem item : lib.items) {
+            System.out.println("  \"" + item.title + "\" (" + item.type + "): " + item.status
+                    + (item.currentBorrower != null ? " - with " + item.currentBorrower : ""));
+        }
+        System.out.println("Active loans:");
+        for (Loan loan : lib.getLoans()) {
+            if (loan.status.equals("ACTIVE")) {
+                System.out.println("  Loan #" + loan.id + ": \"" + loan.itemTitle + "\" -> " + loan.memberName);
+            }
+        }
+
+    }
+
+    private static void printBorrowMessage(LendingItem item, Loan loan) {
+        if (item.type.equals("BOOK") || item.type.equals("AUDIO_KIT")) {
+            System.out.println("Lent \"" + item.title + "\" to " + loan.memberName + " for "
+                    + loan.loanDays + " days");
+        }
     }
 }
