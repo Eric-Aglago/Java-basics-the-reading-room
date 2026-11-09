@@ -34,7 +34,7 @@ public class Member {
         return List.copyOf(history);
     }
 
-    void recordBorrowedItem(String title) {
+    public void recordBorrowedItem(String title) {
         history.add("Borrowed " + title);
     }
 }

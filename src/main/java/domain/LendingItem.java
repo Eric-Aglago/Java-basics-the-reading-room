@@ -37,12 +37,12 @@ public class LendingItem {
         return id;
     }
 
-    void lendTo(String borrower) {
+    public void lendTo(String borrower) {
         status = "ON_LOAN";
         currentBorrower = borrower;
     }
 
-    void returnToShelf() {
+    public void returnToShelf() {
         status = "AVAILABLE";
         currentBorrower = null;
     }

@@ -38,7 +38,7 @@ public class Loan {
         return status;
     }
 
-    void markReturned() {
+    public void markReturned() {
         status = "RETURNED";
     }
 }

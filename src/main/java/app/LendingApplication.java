@@ -1,5 +1,6 @@
 package app;
 
+import application.LendingService;
 import domain.Library;
 import domain.LendingItem;
 import domain.Loan;
@@ -9,6 +10,7 @@ public class LendingApplication {
 
     public static void main(String[] args) {
         Library lib = new Library("The Reading Room");
+        LendingService lendingService = new LendingService(lib);
 
         LendingItem novel = new LendingItem("Things Fall Apart", "BOOK");
         LendingItem audioCourse = new LendingItem("French Audio Course", "AUDIO_KIT");
@@ -21,13 +23,13 @@ public class LendingApplication {
         lib.addMember(ama);
 
         // a normal afternoon
-        printBorrowMessage(novel, lib.borrow(kofi, novel));
-        printBorrowMessage(audioCourse, lib.borrow(ama, audioCourse));
-        lib.returnItem(audioCourse);
+        printBorrowMessage(novel, lendingService.borrow(kofi, novel));
+        printBorrowMessage(audioCourse, lendingService.borrow(ama, audioCourse));
+        lendingService.returnItem(audioCourse);
         System.out.println("Returned \"" + audioCourse.getTitle() + "\"");
 
         // ... and the sort of thing that worries them:
-        printBorrowMessage(novel, lib.borrow(ama, novel)); // the novel is already out with Kofi, but nothing stops this
+        printBorrowMessage(novel, lendingService.borrow(ama, novel)); // the novel is already out with Kofi, but nothing stops this
 
         System.out.println();
         System.out.println("=== " + lib.getName() + " - end of day ===");
@@ -43,7 +45,6 @@ public class LendingApplication {
                         + loan.getMemberName());
             }
         }
-
     }
 
     private static void printBorrowMessage(LendingItem item, Loan loan) {
