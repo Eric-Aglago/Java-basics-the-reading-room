@@ -4,16 +4,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Member {
-    public String name;
-    public String kind; // "STANDARD" or "STUDENT"
-    public int id;
-    public List<String> history = new ArrayList<>();
-    static int counter = 1;
+    private static int counter = 1;
+
+    private final String name;
+    private final String kind; // "STANDARD" or "STUDENT"
+    private final int id;
+    private final List<String> history = new ArrayList<>();
 
     public Member(String name, String kind) {
         this.id = counter;
         counter++;
         this.name = name;
         this.kind = kind;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public List<String> getHistory() {
+        return List.copyOf(history);
+    }
+
+    void recordBorrowedItem(String title) {
+        history.add("Borrowed " + title);
     }
 }

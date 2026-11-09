@@ -24,31 +24,32 @@ public class LendingApplication {
         printBorrowMessage(novel, lib.borrow(kofi, novel));
         printBorrowMessage(audioCourse, lib.borrow(ama, audioCourse));
         lib.returnItem(audioCourse);
-        System.out.println("Returned \"" + audioCourse.title + "\"");
+        System.out.println("Returned \"" + audioCourse.getTitle() + "\"");
 
         // ... and the sort of thing that worries them:
         printBorrowMessage(novel, lib.borrow(ama, novel)); // the novel is already out with Kofi, but nothing stops this
 
         System.out.println();
-        System.out.println("=== " + lib.name + " - end of day ===");
+        System.out.println("=== " + lib.getName() + " - end of day ===");
         System.out.println("Items:");
-        for (LendingItem item : lib.items) {
-            System.out.println("  \"" + item.title + "\" (" + item.type + "): " + item.status
-                    + (item.currentBorrower != null ? " - with " + item.currentBorrower : ""));
+        for (LendingItem item : lib.getItems()) {
+            System.out.println("  \"" + item.getTitle() + "\" (" + item.getType() + "): " + item.getStatus()
+                    + (item.getCurrentBorrower() != null ? " - with " + item.getCurrentBorrower() : ""));
         }
         System.out.println("Active loans:");
         for (Loan loan : lib.getLoans()) {
-            if (loan.status.equals("ACTIVE")) {
-                System.out.println("  Loan #" + loan.id + ": \"" + loan.itemTitle + "\" -> " + loan.memberName);
+            if (loan.getStatus().equals("ACTIVE")) {
+                System.out.println("  Loan #" + loan.getId() + ": \"" + loan.getItemTitle() + "\" -> "
+                        + loan.getMemberName());
             }
         }
 
     }
 
     private static void printBorrowMessage(LendingItem item, Loan loan) {
-        if (item.type.equals("BOOK") || item.type.equals("AUDIO_KIT")) {
-            System.out.println("Lent \"" + item.title + "\" to " + loan.memberName + " for "
-                    + loan.loanDays + " days");
+        if (item.getType().equals("BOOK") || item.getType().equals("AUDIO_KIT")) {
+            System.out.println("Lent \"" + item.getTitle() + "\" to " + loan.getMemberName() + " for "
+                    + loan.getLoanDays() + " days");
         }
     }
 }

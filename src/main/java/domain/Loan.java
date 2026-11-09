@@ -1,12 +1,13 @@
 package domain;
 
 public class Loan {
-    public int id;
-    public String memberName;
-    public String itemTitle;
-    public int loanDays;
-    public String status; // "ACTIVE" or "RETURNED"
-    static int counter = 1;
+    private static int counter = 1;
+
+    private final int id;
+    private final String memberName;
+    private final String itemTitle;
+    private final int loanDays;
+    private String status; // "ACTIVE" or "RETURNED"
 
     public Loan(String memberName, String itemTitle, int loanDays) {
         this.id = counter;
@@ -15,5 +16,29 @@ public class Loan {
         this.itemTitle = itemTitle;
         this.loanDays = loanDays;
         this.status = "ACTIVE";
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public String getItemTitle() {
+        return itemTitle;
+    }
+
+    public int getLoanDays() {
+        return loanDays;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    void markReturned() {
+        status = "RETURNED";
     }
 }
