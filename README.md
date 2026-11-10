@@ -109,6 +109,11 @@ unambiguous loan identity reduce those risks. Policies and repositories also
 make future changes—new item types or storage options—less disruptive for
 volunteers.
 
+## Project Documents
+
+- [Diagnosis](./DIAGNOSIS.md)
+- [Lending Tracker Design](./lendingtracker-design.drawio.png)
+
 ## Running the Application
 
 Install Java 21 and Maven first. Verify they are available in your terminal:
