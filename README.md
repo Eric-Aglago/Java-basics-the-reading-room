@@ -111,20 +111,28 @@ volunteers.
 
 ## Running the Application
 
-Requires Java 21 and has no external runtime dependencies.
+Install Java 21 and Maven first. Verify they are available in your terminal:
 
-With Maven:
-
-```bash
-mvn compile
-java -cp target/classes app.LendingApplication
+```powershell
+java -version
+mvn -version
 ```
 
-Or compile directly from the project directory:
+Open a terminal, navigate to the project directory, then compile and run:
 
-```bash
-javac -d target/classes src/main/java/app/*.java src/main/java/application/*.java src/main/java/domain/*.java src/main/java/persistence/*.java
-java -cp target/classes app.LendingApplication
+```powershell
+cd path\to\java-basics-c-the-reading-room
+mvn compile
+java -cp target\classes app.LendingApplication
+```
+
+Replace `path\to` with the location where you cloned or saved the project. For
+example, if it is in your Downloads folder:
+
+```powershell
+cd C:\Users\YourName\Downloads\java-basics-c-the-reading-room
+mvn compile
+java -cp target\classes app.LendingApplication
 ```
 
 ## Running the Tests
