@@ -7,7 +7,7 @@ asked to deliver, and how your work is assessed.
 ## What this is
 
 A small program The Reading Room uses to track what is borrowed. It works, but it has become risky to change. Your task is to diagnose it
-and rebuild it well — **not** to change what it does, but to make it safe to
+and rebuild it well  **not** to change what it does, but to make it safe to
 change and impossible to leave in an invalid state.
 
 ## Running it
