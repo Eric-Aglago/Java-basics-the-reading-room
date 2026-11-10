@@ -126,3 +126,24 @@ Or compile directly from the project directory:
 javac -d target/classes src/main/java/app/*.java src/main/java/application/*.java src/main/java/domain/*.java src/main/java/persistence/*.java
 java -cp target/classes app.LendingApplication
 ```
+
+## Running the Tests
+
+Requires Java 21 and Maven.
+
+1. Open a terminal in the project directory.
+2. Check that Java and Maven are available:
+   ```bash
+   java -version
+   mvn -version
+   ```
+3. Run the lending service test:
+   ```bash
+   mvn -Dtest=LendingServiceTest test
+   ```
+4. Confirm the test summary reports 6 tests with no failures or errors, followed by `BUILD SUCCESS`.
+
+To run all project tests instead, use:
+```bash
+mvn test
+```

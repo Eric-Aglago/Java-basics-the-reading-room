@@ -1,6 +1,5 @@
 package application;
 
-import domain.Library;
 import domain.LendingItem;
 import domain.Loan;
 import domain.LoanPolicy;
