@@ -24,7 +24,7 @@ java -cp target/classes app.LendingApplication
 **Or directly with the JDK:**
 
 ```bash
-javac -d target/classes src/main/java/app/LendingApplication.java src/main/java/domain/*.java
+javac -d target/classes src/main/java/app/*.java src/main/java/application/*.java src/main/java/domain/*.java src/main/java/persistence/*.java
 java -cp target/classes app.LendingApplication
 ```
 

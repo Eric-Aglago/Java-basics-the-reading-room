@@ -5,12 +5,20 @@ import domain.LendingItem;
 import domain.Loan;
 import domain.LoanPolicy;
 import domain.Member;
+import persistence.ItemRepository;
+import persistence.LoanRepository;
+import persistence.MemberRepository;
 
 public class LendingService {
-    private final Library library;
+    private final ItemRepository itemRepository;
+    private final MemberRepository memberRepository;
+    private final LoanRepository loanRepository;
 
-    public LendingService(Library library) {
-        this.library = library;
+    public LendingService(ItemRepository itemRepository, MemberRepository memberRepository,
+                          LoanRepository loanRepository) {
+        this.itemRepository = itemRepository;
+        this.memberRepository = memberRepository;
+        this.loanRepository = loanRepository;
     }
 
     public Loan borrow(Member member, LendingItem item) {
@@ -21,18 +29,22 @@ public class LendingService {
         LoanPolicy policy = item.getLoanPolicy();
         int loanDays = policy.loanDaysFor(member);
         policy.applyTo(item, member);
+        itemRepository.save(item);
 
         member.recordBorrowedItem(item.getTitle());
+        memberRepository.save(member);
         Loan loan = new Loan(member.getName(), item.getTitle(), loanDays);
-        library.addLoan(loan);
+        loanRepository.save(loan);
         return loan;
     }
 
     public void returnItem(LendingItem item) {
         item.returnToShelf();
-        for (Loan loan : library.getLoans()) {
+        itemRepository.save(item);
+        for (Loan loan : loanRepository.findAll()) {
             if (loan.getItemTitle().equals(item.getTitle()) && loan.getStatus().equals("ACTIVE")) {
                 loan.markReturned();
+                loanRepository.save(loan);
             }
         }
     }

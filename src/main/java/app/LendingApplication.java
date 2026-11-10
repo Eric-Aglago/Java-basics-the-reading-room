@@ -5,22 +5,31 @@ import domain.Library;
 import domain.LendingItem;
 import domain.Loan;
 import domain.Member;
+import persistence.InMemoryItemRepository;
+import persistence.InMemoryLoanRepository;
+import persistence.InMemoryMemberRepository;
+import persistence.ItemRepository;
+import persistence.LoanRepository;
+import persistence.MemberRepository;
 
 public class LendingApplication {
 
     public static void main(String[] args) {
         Library lib = new Library("The Reading Room");
-        LendingService lendingService = new LendingService(lib);
+        ItemRepository itemRepository = new InMemoryItemRepository();
+        MemberRepository memberRepository = new InMemoryMemberRepository();
+        LoanRepository loanRepository = new InMemoryLoanRepository();
+        LendingService lendingService = new LendingService(itemRepository, memberRepository, loanRepository);
 
         LendingItem novel = new LendingItem("Things Fall Apart", "BOOK");
         LendingItem audioCourse = new LendingItem("French Audio Course", "AUDIO_KIT");
-        lib.addItem(novel);
-        lib.addItem(audioCourse);
+        itemRepository.save(novel);
+        itemRepository.save(audioCourse);
 
         Member kofi = new Member("Kofi Mensah", "STANDARD");
         Member ama = new Member("Ama Owusu", "STUDENT");
-        lib.addMember(kofi);
-        lib.addMember(ama);
+        memberRepository.save(kofi);
+        memberRepository.save(ama);
 
         // a normal afternoon
         printBorrowMessage(novel, lendingService.borrow(kofi, novel));
@@ -38,12 +47,12 @@ public class LendingApplication {
         System.out.println();
         System.out.println("=== " + lib.getName() + " - end of day ===");
         System.out.println("Items:");
-        for (LendingItem item : lib.getItems()) {
+        for (LendingItem item : itemRepository.findAll()) {
             System.out.println("  \"" + item.getTitle() + "\" (" + item.getType() + "): " + item.getStatus()
                     + (item.getCurrentBorrower() != null ? " - with " + item.getCurrentBorrower() : ""));
         }
         System.out.println("Active loans:");
-        for (Loan loan : lib.getLoans()) {
+        for (Loan loan : loanRepository.findAll()) {
             if (loan.getStatus().equals("ACTIVE")) {
                 System.out.println("  Loan #" + loan.getId() + ": \"" + loan.getItemTitle() + "\" -> "
                         + loan.getMemberName());
