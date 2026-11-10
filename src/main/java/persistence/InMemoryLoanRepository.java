@@ -5,6 +5,7 @@ import domain.Loan;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class InMemoryLoanRepository implements LoanRepository {
     private final Map<Integer, Loan> loans = new LinkedHashMap<>();
@@ -12,6 +13,11 @@ public class InMemoryLoanRepository implements LoanRepository {
     @Override
     public void save(Loan loan) {
         loans.put(loan.getId(), loan);
+    }
+
+    @Override
+    public Optional<Loan> findById(int loanId) {
+        return Optional.ofNullable(loans.get(loanId));
     }
 
     @Override

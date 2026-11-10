@@ -35,7 +35,7 @@ public class LendingApplication {
         printBorrowMessage(novel, lendingService.borrow(kofi, novel));
         Loan audioLoan = lendingService.borrow(ama, audioCourse);
         printBorrowMessage(audioCourse, audioLoan);
-        lendingService.returnItem(audioLoan);
+        lendingService.returnItem(audioLoan.getId());
         System.out.println("Returned \"" + audioLoan.getItemTitle() + "\"");
 
         // ... and the sort of thing that worries them:

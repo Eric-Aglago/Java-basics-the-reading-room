@@ -38,9 +38,12 @@ public class LendingService {
         return loan;
     }
 
-    public void returnItem(Loan loan) {
+    public void returnItem(int loanId) {
+        Loan loan = loanRepository.findById(loanId)
+                .orElseThrow(() -> new IllegalArgumentException("Loan #" + loanId + " does not exist"));
+
         if (!loan.getStatus().equals("ACTIVE")) {
-            throw new IllegalStateException("Loan #" + loan.getId() + " is not active");
+            throw new IllegalStateException("Loan #" + loanId + " has already been returned");
         }
 
         LendingItem item = loan.getItem();
