@@ -3,6 +3,10 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Member details are immutable after construction. Borrowing history is
+ * maintained internally and exposed as a copy so callers cannot edit it.
+ */
 public class Member {
     private static int counter = 1;
 

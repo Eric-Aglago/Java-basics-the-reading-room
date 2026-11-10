@@ -1,5 +1,9 @@
 package domain;
 
+/*
+ * Item-specific lending rules are kept behind this strategy so new policies
+ * can be added without adding item-type branches to LendingService.
+ */
 public interface LoanPolicy {
     int loanDaysFor(Member member);
 

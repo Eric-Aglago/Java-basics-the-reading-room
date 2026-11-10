@@ -2,11 +2,16 @@ package domain;
 
 import java.util.Objects;
 
+/*
+ * Item identity and policy are fixed at construction; mutable lending state is
+ * changed through the lending and return operations.
+ */
 public class LendingItem {
     private static int counter = 1;
 
     private final String title;
     private final String type; // "BOOK" or "AUDIO_KIT"
+    // Injecting a policy lets future item types define their rules independently.
     private final LoanPolicy loanPolicy;
     private String status; // "AVAILABLE" or "ON_LOAN"
     private String currentBorrower;

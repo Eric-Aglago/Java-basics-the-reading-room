@@ -16,6 +16,8 @@ public class LendingApplication {
 
     public static void main(String[] args) {
         Library lib = new Library("The Reading Room");
+        // Wire repository interfaces to in-memory storage so the workflow is
+        // independent of the current persistence choice.
         ItemRepository itemRepository = new InMemoryItemRepository();
         MemberRepository memberRepository = new InMemoryMemberRepository();
         LoanRepository loanRepository = new InMemoryLoanRepository();
@@ -39,6 +41,7 @@ public class LendingApplication {
         System.out.println("Returned \"" + audioLoan.getItemTitle() + "\"");
 
         // ... and the sort of thing that worries them:
+        // Demonstrate that a second active loan for the same physical item is rejected.
         try {
             printBorrowMessage(novel, lendingService.borrow(ama, novel));
         } catch (IllegalStateException exception) {
@@ -54,6 +57,8 @@ public class LendingApplication {
         }
         System.out.println("Active loans:");
         for (Loan loan : loanRepository.findAll()) {
+            // Returned loans remain in the repository as history, but only active
+            // loans belong in this report section.
             if (loan.getStatus().equals("ACTIVE")) {
                 System.out.println("  Loan #" + loan.getId() + ": \"" + loan.getItemTitle() + "\" -> "
                         + loan.getMemberName());

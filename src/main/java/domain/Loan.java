@@ -1,5 +1,9 @@
 package domain;
 
+/*
+ * A loan stores the actual item reference, not just its title, because titles
+ * may be shared by multiple physical copies.
+ */
 public class Loan {
     private static int counter = 1;
 
@@ -7,6 +11,7 @@ public class Loan {
     private final String memberName;
     private final LendingItem item;
     private final int loanDays;
+    // Status changes from ACTIVE to RETURNED; returned loans remain as history.
     private String status; // "ACTIVE" or "RETURNED"
 
     public Loan(String memberName, LendingItem item, int loanDays) {

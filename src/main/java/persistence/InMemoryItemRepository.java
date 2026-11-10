@@ -6,6 +6,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
+ * This implementation keeps records only for the current process. Insertion
+ * order makes item reports deterministic; a durable repository can replace it.
+ */
 public class InMemoryItemRepository implements ItemRepository {
     private final Map<Integer, LendingItem> items = new LinkedHashMap<>();
 

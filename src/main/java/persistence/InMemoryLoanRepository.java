@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/*
+ * Loans are keyed by unique ID for direct lookup. Insertion order also keeps
+ * loan listings stable; this in-memory store can be replaced by durable storage.
+ */
 public class InMemoryLoanRepository implements LoanRepository {
     private final Map<Integer, Loan> loans = new LinkedHashMap<>();
 

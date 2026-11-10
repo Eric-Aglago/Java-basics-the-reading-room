@@ -1,10 +1,10 @@
-# Design Notes
+ Design Notes
 
 The Reading Room tracker has been reorganized so each part of the program has a
 clear responsibility. The changes preserve the existing BOOK and AUDIO_KIT
 loan periods and make lending records safer to update as the system grows.
 
-## 1. Separating the classes
+ 1. Separating the classes
 
 The original program placed the application entry point, library operations,
 items, members, and loans in one source file. These responsibilities are now
