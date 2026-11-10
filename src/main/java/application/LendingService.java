@@ -33,19 +33,20 @@ public class LendingService {
 
         member.recordBorrowedItem(item.getTitle());
         memberRepository.save(member);
-        Loan loan = new Loan(member.getName(), item.getTitle(), loanDays);
+        Loan loan = new Loan(member.getName(), item, loanDays);
         loanRepository.save(loan);
         return loan;
     }
 
-    public void returnItem(LendingItem item) {
+    public void returnItem(Loan loan) {
+        if (!loan.getStatus().equals("ACTIVE")) {
+            throw new IllegalStateException("Loan #" + loan.getId() + " is not active");
+        }
+
+        LendingItem item = loan.getItem();
         item.returnToShelf();
         itemRepository.save(item);
-        for (Loan loan : loanRepository.findAll()) {
-            if (loan.getItemTitle().equals(item.getTitle()) && loan.getStatus().equals("ACTIVE")) {
-                loan.markReturned();
-                loanRepository.save(loan);
-            }
-        }
+        loan.markReturned();
+        loanRepository.save(loan);
     }
 }

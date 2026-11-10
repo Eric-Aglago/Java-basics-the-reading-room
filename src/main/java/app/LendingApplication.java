@@ -33,9 +33,10 @@ public class LendingApplication {
 
         // a normal afternoon
         printBorrowMessage(novel, lendingService.borrow(kofi, novel));
-        printBorrowMessage(audioCourse, lendingService.borrow(ama, audioCourse));
-        lendingService.returnItem(audioCourse);
-        System.out.println("Returned \"" + audioCourse.getTitle() + "\"");
+        Loan audioLoan = lendingService.borrow(ama, audioCourse);
+        printBorrowMessage(audioCourse, audioLoan);
+        lendingService.returnItem(audioLoan);
+        System.out.println("Returned \"" + audioLoan.getItemTitle() + "\"");
 
         // ... and the sort of thing that worries them:
         try {
